@@ -14,18 +14,21 @@ class OTPVerifyPage extends StatefulWidget {
 class _OTPVerifyPageState extends State<OTPVerifyPage> {
   final TextEditingController _otpController = TextEditingController();
 
-  void verifyOTP() {
-    if (_otpController.text == widget.otp) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Incorrect OTP. Try again.")),
-      );
-    }
+ void verifyOTP() {
+  if (_otpController.text == widget.otp) {
+    // This clears all previous routes (Login, OTP Entry, etc.) 
+    // and makes HomeScreen the new root of your app.
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      (route) => false, // This condition 'false' tells Flutter to remove all previous routes
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Incorrect OTP. Try again.")),
+    );
   }
+}
 
   @override
   Widget build(BuildContext context) {
